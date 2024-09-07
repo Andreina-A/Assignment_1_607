@@ -1,0 +1,70 @@
+---
+title: "Assignment 1: Loading Data into a Data Frame"
+author: "Andreina A"
+date: "2024-09-06"
+output: html_document
+---
+
+Assignment – Loading Data into a Data Frame
+
+
+**Introduction**
+
+Do you ever find yourself watching the Super Bowl just for the commercial? Well in the article "According To Super Bowl Ads, Americans Love America, Animals And Sex" by Ryan Best, 10 most aired brand Superbowl ads from 2000-2020 were analyzed based on seven different criteria, such as, "was the ad intended to be funny?", "was it patriotic?", "was the product shown right away (shown within the first 10 seconds)?", "did it feature a celebrity?", "did it have danger?", "did it have animals?", and "did it use sex to sell the product?". The data collected showed astonishing correlation, in the article you'll see how the data collected is categorized into three groups, ads with danger and not trying to be funny, patriotism with a celebrity in the ad, and ads trying to be funny using sex and animals.  
+
+Article: https://projects.fivethirtyeight.com/super-bowl-ads/  
+Data Source: https://github.com/fivethirtyeight/superbowl-ads
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(dplyr)
+```
+
+## Loading data from website
+
+
+```{r Superbowl_ads_data, message=FALSE, echo=TRUE}
+Superbowl_ads<-read.csv("https://raw.githubusercontent.com/fivethirtyeight/superbowl-ads/main/superbowl-ads.csv")
+```
+
+## Glimpse of Super Bowl ads data
+
+```{r echo=TRUE}
+glimpse(Superbowl_ads)
+```
+
+
+## Subset data frame for ads with danger and not trying to be funny
+
+This subset data show the category for Super Bowl ads that had danger but weren't trying to be funny:
+
+```{r Ads_with_danger_vs_not_funny}
+Superbowl_ads_not_funny_with_danger<-subset(Superbowl_ads, funny== 'False' & danger== 'True', select = c(year, brand, superbowl_ads_dot_com_url, funny, danger))
+```
+
+
+
+## Subset dataframe for ads that were patriotic with a celebrity
+
+This subset data will show the Super Bowl ads that were patriotic and had a celebrity:
+
+```{r}
+Superbowl_ads_patriotic_celebrity<-subset(Superbowl_ads, patriotic== 'True' & celebrity== 'True', select = c(year, brand, superbowl_ads_dot_com_url, patriotic, celebrity))
+```
+
+
+
+## Subset dataframe for ads that were funny and used animals and sexual content
+
+This subset data will show the Super Bowl ads that tried to be funny and used animals and sexual content:
+
+```{r}
+Superbowl_ads_funny_animal_sexual<-subset(Superbowl_ads, funny== 'True' & animals== 'True' & use_sex=='True', select = c(year, brand, superbowl_ads_dot_com_url, funny, animals, use_sex))
+```
+
+
+
+**Conclusion**
+
+The article "According To Super Bowl Ads, Americans Love America, Animals And Sex", presented a great way to look at data from Super Bowl commercials but the purpose of ads are to possibly increase sells. I feel the data should have have included the amount of products sold within the two weeks from the commercial airing, to see if the commercial was successful at getting consumers' attention. Seeing the sells may give us an answer to why certain brands use certain attributes. Last year Tubi (TV streaming service) aired a commercial (2023) that left many confused, I wonder did it increase it's subscribers or did it backfire on them and taught other brands to never create an ad like that one. And yes, I am guilty of just watching the Super Bowl for the funny commercials.
